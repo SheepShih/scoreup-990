@@ -61,6 +61,11 @@ ul.mini li::before{content:"";position:absolute;left:2px;top:11px;width:6px;heig
 a.mail{color:var(--ink);text-decoration:none;font-weight:600;border-bottom:1.5px solid var(--hair)}
 a.mail:hover{border-bottom-color:var(--ink)}
 
+/* もう一方のページへのリンク（Oo-peh-hip と同じく本文の最後に「サポート →」） */
+.other{margin:28px 0 0;font-size:15px}
+.other a{color:var(--ink);font-weight:700;text-decoration:none;border-bottom:1.5px solid var(--hair)}
+.other a:hover{border-bottom-color:var(--ink)}
+
 footer{margin-top:28px;padding:30px 0 60px;border-top:1px solid var(--hair);font-size:12.5px;color:var(--secondary);
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 footer .tm{flex-basis:100%;color:var(--tertiary)}
@@ -116,12 +121,17 @@ def clauses(sections):
                      for i, (h, ls) in enumerate(items, 1))
 
 LANGS = [("ja", "日本語"), ("en", "English"), ("zh", "繁體中文")]
+# もう一方のページへのリンク
+OTHER = {"privacy": ("support.html", {"ja": "サポート", "en": "Support", "zh": "支援"}),
+         "support": ("privacy.html", {"ja": "プライバシーポリシー", "en": "Privacy Policy", "zh": "隱私權政策"})}
 
-def doc(src, lang):
+def doc(src, lang, kind):
+    href, names = OTHER[kind]
     intro, sections = parse((SRC / src).read_text())
     return f"""<section class="doc" data-lang="{lang}" lang="{'zh-Hant' if lang == 'zh' else lang}">
 {''.join(f'<p class="lede">{inline(l)}</p>' for l in intro)}
 {clauses(sections)}
+<p class="other"><a href="{href}">{names[lang]} →</a></p>
 </section>"""
 
 def page(kind, srcs, out):
@@ -132,7 +142,7 @@ def page(kind, srcs, out):
         meta = f'<span>サポート <b>{EMAIL}</b></span><span>バージョン <b>1.0</b></span>'
     radios = "".join(f'<input class="lang-radio" type="radio" name="lang" id="lang-{c}"{" checked" if c == "ja" else ""}>' for c, _ in LANGS)
     tabs = "".join(f'<label for="lang-{c}">{n}</label>' for c, n in LANGS)
-    docs = "\n".join(doc(srcs[c], c) for c, _ in LANGS)
+    docs = "\n".join(doc(srcs[c], c, kind) for c, _ in LANGS)
     html_doc = f"""<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{label} — Score Up 990</title><style>{CSS}</style></head>
