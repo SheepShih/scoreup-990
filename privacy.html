@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Privacy Policy — Score Up 990</title><style>
 :root{--page-top:#FDFBFB;--page-bottom:#EBEDEE;--surface:#FFFFFF;--chip:#EAEAEA;--ink:#000000;--heading:#1A1A1A;--secondary:#565656;--tertiary:#ADADAD}
 *{box-sizing:border-box}
@@ -10,9 +10,16 @@ main{max-width:520px;margin:0 auto;padding:56px 32px 64px}
 .app{display:flex;align-items:center;gap:12px;margin-bottom:24px}
 .app img{width:44px;height:44px;border-radius:10px}
 .app span{font-size:13px;font-weight:700}
-nav{display:flex;gap:8px;margin-bottom:32px}
-nav a{font-size:11px;font-weight:600;padding:6px 8px;border-radius:999px;background:var(--chip);color:var(--ink);text-decoration:none}
-nav a.on{background:var(--ink);color:#fff}
+/* 言語の切り替え（JavaScript なし。アプリの How scores work の言語切り替えと同じ形） */
+.lang-radio{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.tabs{display:flex;background:var(--chip);border-radius:999px;padding:3px;margin-bottom:40px}
+.tabs label{flex:1;text-align:center;font-size:13px;font-weight:500;padding:7px 0;border-radius:999px;cursor:pointer;color:var(--ink)}
+#lang-ja:checked ~ .tabs label[for="lang-ja"],#lang-en:checked ~ .tabs label[for="lang-en"],#lang-zh:checked ~ .tabs label[for="lang-zh"]{background:var(--surface);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.lang-radio:focus-visible ~ .tabs{outline:2px solid var(--ink);outline-offset:3px}
+.doc{display:none}
+#lang-ja:checked ~ .doc[data-lang="ja"],#lang-en:checked ~ .doc[data-lang="en"],#lang-zh:checked ~ .doc[data-lang="zh"]{display:block}
+.other{font-size:13px;margin-top:8px}
+.other a{color:var(--ink);font-weight:700}
 h1{font-size:34px;line-height:41px;letter-spacing:.4px;font-weight:700;color:var(--heading);margin:0 0 8px}
 .updated{font-size:13px;color:var(--secondary);margin:0 0 40px}
 .intro{font-size:16px;line-height:1.6;margin:0 0 40px}
@@ -32,7 +39,30 @@ footer{margin-top:48px;font-size:11px;line-height:1.6;color:var(--tertiary)}
 </style></head>
 <body><main>
 <div class="app"><img src="icon.png" alt=""><span>Score Up 990</span></div>
-<nav><a href="privacy.html" class="on">Privacy Policy</a><a href="support.html">Support</a></nav>
+<input class="lang-radio" type="radio" name="lang" id="lang-ja" checked><input class="lang-radio" type="radio" name="lang" id="lang-en"><input class="lang-radio" type="radio" name="lang" id="lang-zh">
+<nav class="tabs" aria-label="言語 / Language"><label for="lang-ja">日本語</label><label for="lang-en">English</label><label for="lang-zh">繁體中文</label></nav>
+<article class="doc" data-lang="ja" lang="ja">
+<h1>プライバシーポリシー</h1>
+<p class="updated">最終更新：2026年10月27日</p>
+<p class="intro">Score Up 990（以下「本アプリ」）は Sheep Shih が開発しています。</p>
+<section><h2>収集する情報</h2>
+<div class="card"><p>本アプリは、個人情報を収集したり、サーバーに保存したり、第三者と共有したりすることはありません。</p>
+<ul><li>学習の記録・設定・シール・目標スコアは、お使いの端末の中にだけ保存されます。</li><li>アカウント登録・広告・利用状況の分析・トラッキングはありません。</li><li>本アプリが開発者のサーバーに接続することはありません。</li></ul></div></section>
+<section><h2>通知</h2>
+<div class="card"><p>平日のリマインダーをオンにすると、端末の中で通知を予約します。どこにも情報は送信されません。</p></div></section>
+<section><h2>音声</h2>
+<div class="card"><p>リスニングの音声と発音は、iOS が端末の中で作っています。あなたの声を録音することはありません。</p></div></section>
+<section><h2>データの削除</h2>
+<div class="card"><p>学習の記録は、設定の「Reset all progress」またはアプリの削除で、すべて消すことができます。</p></div></section>
+<section><h2>お子さまについて</h2>
+<div class="card"><p>本アプリは、お子さまを含め、誰の情報も収集しません。</p></div></section>
+<section><h2>変更について</h2>
+<div class="card"><p>このポリシーを変更する場合は、このページでお知らせします。</p></div></section>
+<section><h2>お問い合わせ</h2>
+<div class="card"><p>ご質問は <a class="mail" href="mailto:stf0830@icloud.com">stf0830@icloud.com</a> までご連絡ください。</p></div></section>
+<p class="other"><a href="support.html">サポート</a></p>
+</article>
+<article class="doc" data-lang="en" lang="en">
 <h1>Privacy Policy</h1>
 <p class="updated">Last updated: October 27, 2026</p>
 <p class="intro">Score Up 990 (&quot;the app&quot;) is developed by Sheep Shih.</p>
@@ -51,5 +81,28 @@ footer{margin-top:48px;font-size:11px;line-height:1.6;color:var(--tertiary)}
 <div class="card"><p>If this policy changes, the new version will be posted on this page.</p></div></section>
 <section><h2>Contact</h2>
 <div class="card"><p>If you have any questions, please contact: <a class="mail" href="mailto:stf0830@icloud.com">stf0830@icloud.com</a></p></div></section>
+<p class="other"><a href="support.html">Support</a></p>
+</article>
+<article class="doc" data-lang="zh" lang="zh-Hant">
+<h1>隱私權政策</h1>
+<p class="updated">最後更新：2026 年 10 月 27 日</p>
+<p class="intro">Score Up 990（以下稱「本 App」）由 Sheep Shih 開發。</p>
+<section><h2>我們蒐集的資訊</h2>
+<div class="card"><p>本 App 不會蒐集任何個人資料，也不會將資料儲存在伺服器上或與第三方分享。</p>
+<ul><li>你的學習紀錄、設定、貼紙和目標分數，都只會儲存在你的裝置上。</li><li>本 App 沒有帳號註冊、廣告、使用分析或追蹤功能。</li><li>本 App 不會連線到開發者的任何伺服器。</li></ul></div></section>
+<section><h2>通知</h2>
+<div class="card"><p>開啟平日提醒後，本 App 會在你的裝置上排定本機通知，不會傳送任何資訊。</p></div></section>
+<section><h2>語音</h2>
+<div class="card"><p>聽力音檔和發音由 iOS 在你的裝置上產生。本 App 不會錄下你的聲音。</p></div></section>
+<section><h2>刪除資料</h2>
+<div class="card"><p>你可以在「設定」中點選「Reset all progress」，或刪除本 App，來清除所有學習紀錄。</p></div></section>
+<section><h2>兒童</h2>
+<div class="card"><p>本 App 不會蒐集任何人的資訊，包括兒童。</p></div></section>
+<section><h2>政策變更</h2>
+<div class="card"><p>如果本政策有所變更，我們會在此頁面公布新版本。</p></div></section>
+<section><h2>聯絡我們</h2>
+<div class="card"><p>如有任何問題，請寄信至 <a class="mail" href="mailto:stf0830@icloud.com">stf0830@icloud.com</a>。</p></div></section>
+<p class="other"><a href="support.html">支援</a></p>
+</article>
 <footer>© 2026 Sheep Shih<br>TOEIC is a registered trademark of ETS. This app is not endorsed or approved by ETS.</footer>
 </main></body></html>

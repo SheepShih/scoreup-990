@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Support — Score Up 990</title><style>
 :root{--page-top:#FDFBFB;--page-bottom:#EBEDEE;--surface:#FFFFFF;--chip:#EAEAEA;--ink:#000000;--heading:#1A1A1A;--secondary:#565656;--tertiary:#ADADAD}
 *{box-sizing:border-box}
@@ -10,9 +10,16 @@ main{max-width:520px;margin:0 auto;padding:56px 32px 64px}
 .app{display:flex;align-items:center;gap:12px;margin-bottom:24px}
 .app img{width:44px;height:44px;border-radius:10px}
 .app span{font-size:13px;font-weight:700}
-nav{display:flex;gap:8px;margin-bottom:32px}
-nav a{font-size:11px;font-weight:600;padding:6px 8px;border-radius:999px;background:var(--chip);color:var(--ink);text-decoration:none}
-nav a.on{background:var(--ink);color:#fff}
+/* 言語の切り替え（JavaScript なし。アプリの How scores work の言語切り替えと同じ形） */
+.lang-radio{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.tabs{display:flex;background:var(--chip);border-radius:999px;padding:3px;margin-bottom:40px}
+.tabs label{flex:1;text-align:center;font-size:13px;font-weight:500;padding:7px 0;border-radius:999px;cursor:pointer;color:var(--ink)}
+#lang-ja:checked ~ .tabs label[for="lang-ja"],#lang-en:checked ~ .tabs label[for="lang-en"],#lang-zh:checked ~ .tabs label[for="lang-zh"]{background:var(--surface);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.lang-radio:focus-visible ~ .tabs{outline:2px solid var(--ink);outline-offset:3px}
+.doc{display:none}
+#lang-ja:checked ~ .doc[data-lang="ja"],#lang-en:checked ~ .doc[data-lang="en"],#lang-zh:checked ~ .doc[data-lang="zh"]{display:block}
+.other{font-size:13px;margin-top:8px}
+.other a{color:var(--ink);font-weight:700}
 h1{font-size:34px;line-height:41px;letter-spacing:.4px;font-weight:700;color:var(--heading);margin:0 0 8px}
 .updated{font-size:13px;color:var(--secondary);margin:0 0 40px}
 .intro{font-size:16px;line-height:1.6;margin:0 0 40px}
@@ -32,7 +39,24 @@ footer{margin-top:48px;font-size:11px;line-height:1.6;color:var(--tertiary)}
 </style></head>
 <body><main>
 <div class="app"><img src="icon.png" alt=""><span>Score Up 990</span></div>
-<nav><a href="privacy.html">Privacy Policy</a><a href="support.html" class="on">Support</a></nav>
+<input class="lang-radio" type="radio" name="lang" id="lang-ja" checked><input class="lang-radio" type="radio" name="lang" id="lang-en"><input class="lang-radio" type="radio" name="lang" id="lang-zh">
+<nav class="tabs" aria-label="言語 / Language"><label for="lang-ja">日本語</label><label for="lang-en">English</label><label for="lang-zh">繁體中文</label></nav>
+<article class="doc" data-lang="ja" lang="ja">
+<h1>サポート</h1>
+
+<p class="intro">Score Up 990 をご利用いただき、ありがとうございます。</p>
+<section><h2>よくある質問</h2>
+<div class="card faq"><p class="q">いつ勉強できますか？</p><p class="a">学習は平日（月〜金）にできます。土日はお休みの日です。Diary は毎日見られます。</p></div>
+<div class="card faq"><p class="q">推定スコアはどうやって出していますか？</p><p class="a">問題にはそれぞれ難しさがあります。難しい問題に正解するほど、推定スコアは大きく上がります。リスニングとリーディングは別々に計算し、総合はその平均です。リスニング・リーディングをそれぞれ5問以上解くと表示されます。くわしくは Diary の「?」（How scores work）をご覧ください。</p></div>
+<div class="card faq"><p class="q">公式のスコアですか？</p><p class="a">いいえ。このアプリでの解答から出した目安です。TOEIC は ETS の登録商標です。このアプリは ETS による認定・承認を受けたものではありません。</p></div>
+<div class="card faq"><p class="q">学習時間や音声のアクセントは変えられますか？</p><p class="a">はい。Study タブの「60 minutes」を押すと、30分か60分を選べます。アクセントと読み上げの速さは設定で変えられます。</p></div>
+<div class="card faq"><p class="q">最初からやり直すには？</p><p class="a">設定の「Reset all progress」を押してください。端末の中の学習の記録がすべて消えます。</p></div></section>
+<section><h2>お問い合わせ</h2>
+<div class="card"><p>メール：<a class="mail" href="mailto:stf0830@icloud.com">stf0830@icloud.com</a></p>
+<p>不具合のご報告は、お使いの機種と iOS のバージョンを添えていただけると助かります。</p></div></section>
+<p class="other"><a href="privacy.html">プライバシーポリシー</a></p>
+</article>
+<article class="doc" data-lang="en" lang="en">
 <h1>Support</h1>
 
 <p class="intro">Thank you for using Score Up 990.</p>
@@ -45,5 +69,22 @@ footer{margin-top:48px;font-size:11px;line-height:1.6;color:var(--tertiary)}
 <section><h2>Contact</h2>
 <div class="card"><p>Email: <a class="mail" href="mailto:stf0830@icloud.com">stf0830@icloud.com</a></p>
 <p>Please include your device model and iOS version if you are reporting a problem.</p></div></section>
+<p class="other"><a href="privacy.html">Privacy Policy</a></p>
+</article>
+<article class="doc" data-lang="zh" lang="zh-Hant">
+<h1>支援</h1>
+
+<p class="intro">感謝你使用 Score Up 990。</p>
+<section><h2>常見問題</h2>
+<div class="card faq"><p class="q">什麼時候可以讀書？</p><p class="a">平日（週一到週五）可以進行學習，週末是休息日。Diary 每天都可以查看。</p></div>
+<div class="card faq"><p class="q">預估分數是怎麼算的？</p><p class="a">每一題都有難度。答對越難的題目，預估分數上升越多。聽力和閱讀分開計算，總分是兩者的平均。聽力和閱讀各作答 5 題以上後就會顯示。詳情請看 Diary 的「?」（How scores work）。</p></div>
+<div class="card faq"><p class="q">這是官方分數嗎？</p><p class="a">不是。分數是根據你在本 App 的作答所估算的參考值。TOEIC 是 ETS 的註冊商標。本 App 並未經過 ETS 認可或核准。</p></div>
+<div class="card faq"><p class="q">可以更改學習時間或語音口音嗎？</p><p class="a">可以。點一下 Study 分頁的「60 minutes」，就能選擇 30 分鐘或 60 分鐘。口音和朗讀速度可以在「設定」中更改。</p></div>
+<div class="card faq"><p class="q">要怎麼重新開始？</p><p class="a">請點選「設定」中的「Reset all progress」。裝置上的所有學習紀錄都會被刪除。</p></div></section>
+<section><h2>聯絡我們</h2>
+<div class="card"><p>電子郵件：<a class="mail" href="mailto:stf0830@icloud.com">stf0830@icloud.com</a></p>
+<p>回報問題時，如能附上你的裝置型號和 iOS 版本，會很有幫助。</p></div></section>
+<p class="other"><a href="privacy.html">隱私權政策</a></p>
+</article>
 <footer>© 2026 Sheep Shih<br>TOEIC is a registered trademark of ETS. This app is not endorsed or approved by ETS.</footer>
 </main></body></html>

@@ -1,6 +1,7 @@
 # Release/privacy-policy.md と support.md から、アプリと同じ見た目の HTML を作る
 # （背景グラデーション #FDFBFB→#EBEDEE、見出し Bold 34、白いカード r16、本文 16 / 補足 13 #565656、
 #   ページの切り替えは言語ピルと同じ形：灰色 #EAEAEA／選択中は黒）
+# 日本語・English・繁體中文を1ページに入れ、上のタブで切り替える（Oo-peh-hip と同じ仕組み。最初は日本語）
 # usage: cd Release/site && python3 build.py
 import html, re
 from pathlib import Path
@@ -18,9 +19,16 @@ main{max-width:520px;margin:0 auto;padding:56px 32px 64px}
 .app{display:flex;align-items:center;gap:12px;margin-bottom:24px}
 .app img{width:44px;height:44px;border-radius:10px}
 .app span{font-size:13px;font-weight:700}
-nav{display:flex;gap:8px;margin-bottom:32px}
-nav a{font-size:11px;font-weight:600;padding:6px 8px;border-radius:999px;background:var(--chip);color:var(--ink);text-decoration:none}
-nav a.on{background:var(--ink);color:#fff}
+/* 言語の切り替え（JavaScript なし。アプリの How scores work の言語切り替えと同じ形） */
+.lang-radio{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.tabs{display:flex;background:var(--chip);border-radius:999px;padding:3px;margin-bottom:40px}
+.tabs label{flex:1;text-align:center;font-size:13px;font-weight:500;padding:7px 0;border-radius:999px;cursor:pointer;color:var(--ink)}
+#lang-ja:checked ~ .tabs label[for="lang-ja"],#lang-en:checked ~ .tabs label[for="lang-en"],#lang-zh:checked ~ .tabs label[for="lang-zh"]{background:var(--surface);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.lang-radio:focus-visible ~ .tabs{outline:2px solid var(--ink);outline-offset:3px}
+.doc{display:none}
+#lang-ja:checked ~ .doc[data-lang="ja"],#lang-en:checked ~ .doc[data-lang="en"],#lang-zh:checked ~ .doc[data-lang="zh"]{display:block}
+.other{font-size:13px;margin-top:8px}
+.other a{color:var(--ink);font-weight:700}
 h1{font-size:34px;line-height:41px;letter-spacing:.4px;font-weight:700;color:var(--heading);margin:0 0 8px}
 .updated{font-size:13px;color:var(--secondary);margin:0 0 40px}
 .intro{font-size:16px;line-height:1.6;margin:0 0 40px}
@@ -75,32 +83,46 @@ def body_html(lines, faq=False):
     if items: out.append("<ul>" + "".join(items) + "</ul>")
     return '<div class="card">' + "\n".join(out) + "</div>"
 
-def page(src, out, active):
+LANGS = [("ja", "日本語"), ("en", "English"), ("zh", "繁體中文")]
+# もう一方のページへのリンクの文言
+OTHER = {"privacy": {"ja": "サポート", "en": "Support", "zh": "支援"},
+         "support": {"ja": "プライバシーポリシー", "en": "Privacy Policy", "zh": "隱私權政策"}}
+
+def doc(src, lang, kind):
     title, intro, sections = parse((SRC / src).read_text())
-    updated = next((l for l in intro if l.startswith("Last updated")), None)
+    updated = intro[0] if intro and re.match(r"(Last updated|最終更新|最後更新)", intro[0]) else None
     rest = [l for l in intro if l != updated]
     secs = []
     for s in sections:
-        faq = s["h"].lower().startswith("frequently")
+        faq = any(s["h"].startswith(w) for w in ("Frequently", "よくある", "常見"))
         secs.append(f'<section><h2>{inline(s["h"])}</h2>\n{body_html(s["lines"], faq)}</section>')
-    on = ' class="on"'
-    nav = "".join(f'<a href="{href}"{on if href == active else ""}>{name}</a>'
-                  for href, name in [("privacy.html", "Privacy Policy"), ("support.html", "Support")])
-    doc = f"""<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{html.escape(title)} — Score Up 990</title><style>{CSS}</style></head>
-<body><main>
-<div class="app"><img src="icon.png" alt=""><span>Score Up 990</span></div>
-<nav>{nav}</nav>
+    other = "support" if kind == "privacy" else "privacy"
+    return f"""<article class="doc" data-lang="{lang}" lang="{'zh-Hant' if lang == 'zh' else lang}">
 <h1>{html.escape(title)}</h1>
 {f'<p class="updated">{inline(updated)}</p>' if updated else ''}
 {''.join(f'<p class="intro">{inline(l)}</p>' for l in rest)}
 {chr(10).join(secs)}
+<p class="other"><a href="{other}.html">{OTHER[kind][lang]}</a></p>
+</article>"""
+
+def page(kind, srcs, out):
+    radios = "".join(f'<input class="lang-radio" type="radio" name="lang" id="lang-{c}"{" checked" if c == "ja" else ""}>' for c, _ in LANGS)
+    tabs = "".join(f'<label for="lang-{c}">{n}</label>' for c, n in LANGS)
+    docs = "\n".join(doc(srcs[c], c, kind) for c, _ in LANGS)
+    title = "Privacy Policy" if kind == "privacy" else "Support"
+    html_doc = f"""<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{title} — Score Up 990</title><style>{CSS}</style></head>
+<body><main>
+<div class="app"><img src="icon.png" alt=""><span>Score Up 990</span></div>
+{radios}
+<nav class="tabs" aria-label="言語 / Language">{tabs}</nav>
+{docs}
 <footer>© 2026 Sheep Shih<br>TOEIC is a registered trademark of ETS. This app is not endorsed or approved by ETS.</footer>
 </main></body></html>
 """
-    (ROOT / out).write_text(doc)
+    (ROOT / out).write_text(html_doc)
 
-page("privacy-policy.md", "privacy.html", "privacy.html")
-page("support.md", "support.html", "support.html")
+page("privacy", {"ja": "privacy-policy.ja.md", "en": "privacy-policy.md", "zh": "privacy-policy.zh.md"}, "privacy.html")
+page("support", {"ja": "support.ja.md", "en": "support.md", "zh": "support.zh.md"}, "support.html")
 print("built privacy.html, support.html")
