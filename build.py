@@ -19,11 +19,13 @@ main{max-width:520px;margin:0 auto;padding:56px 32px 64px}
 .app{display:flex;align-items:center;gap:12px;margin-bottom:24px}
 .app img{width:44px;height:44px;border-radius:10px}
 .app span{font-size:13px;font-weight:700}
-/* 言語の切り替え（JavaScript なし。アプリの How scores work の言語切り替えと同じ形） */
+/* 言語の切り替え（JavaScript なし。Oo-peh-hip と同じ、枠線だけの丸いボタン。選んだボタンは黒く塗る） */
 .lang-radio{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.tabs{display:flex;background:var(--chip);border-radius:999px;padding:3px;margin-bottom:40px}
-.tabs label{flex:1;text-align:center;font-size:13px;font-weight:500;padding:7px 0;border-radius:999px;cursor:pointer;color:var(--ink)}
-#lang-ja:checked ~ .tabs label[for="lang-ja"],#lang-en:checked ~ .tabs label[for="lang-en"],#lang-zh:checked ~ .tabs label[for="lang-zh"]{background:var(--surface);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px}
+.tabs label{font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--secondary);background:transparent;
+  border:1px solid #D0D0D0;border-radius:999px;padding:8px 18px;cursor:pointer;transition:.18s ease;user-select:none}
+.tabs label:hover{color:var(--ink);border-color:var(--secondary)}
+#lang-ja:checked ~ .tabs label[for="lang-ja"],#lang-en:checked ~ .tabs label[for="lang-en"],#lang-zh:checked ~ .tabs label[for="lang-zh"]{color:#fff;background:var(--ink);border-color:var(--ink)}
 .lang-radio:focus-visible ~ .tabs{outline:2px solid var(--ink);outline-offset:3px}
 .doc{display:none}
 #lang-ja:checked ~ .doc[data-lang="ja"],#lang-en:checked ~ .doc[data-lang="en"],#lang-zh:checked ~ .doc[data-lang="zh"]{display:block}
