@@ -157,7 +157,7 @@ def page(kind, srcs, out):
 <main>
 {docs}
 </main>
-<footer><span>Score Up 990</span><span>© 2026 Sheep Shih</span>
+<footer><span>Score Up 990</span><span>© 2026</span>
 <span class="tm">TOEIC is a registered trademark of ETS. This app is not endorsed or approved by ETS.</span></footer>
 </div></body></html>
 """
