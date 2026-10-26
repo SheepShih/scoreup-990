@@ -145,7 +145,7 @@ def page(kind, srcs, out):
     docs = "\n".join(doc(srcs[c], c, kind) for c, _ in LANGS)
     html_doc = f"""<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{label} — Score Up 990</title><style>{CSS}</style></head>
+<title>Score Up 990 {"プライバシー" if kind == "privacy" else "サポート"}</title><style>{CSS}</style></head>
 <body><div class="wrap">
 {radios}
 <header>
